@@ -1,0 +1,12 @@
+﻿@{
+    var myChart = new Chart(width: 600, height: 400, theme: ChartTheme.Green)
+        .AddTitle("Project-Fund Chart")
+        .AddLegend("Percentage Distribution")
+        .AddSeries(
+            name: "Project-Funds",
+            xValue: ViewBag.xCol,
+            yValues: ViewBag.yCol,
+            xField: "Projects", yFields: "Funds", chartType: "pie")
+            .Write();
+
+}

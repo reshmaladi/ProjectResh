@@ -1,0 +1,120 @@
+﻿@model HackathonPMA.Models.UserDetailsModel
+
+<div>
+    <h4>Application User</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.User.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Roles)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Roles)
+        </dd>
+@if (HttpContext.Current.User.Identity.IsAuthenticated)
+{
+    if (User.IsInRole("Admin"))
+    {
+        <dt>
+            @Html.DisplayNameFor(model => model.User.Gender)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.Gender)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.User.AddressLine)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.User.AddressLine)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.User.City)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.City)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.State)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.State)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.Country)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.Country)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.Zip)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.Zip)
+        </dd>
+    
+        <dt>
+            @Html.DisplayNameFor(model => model.User.Salary)
+        </dt>
+    
+        <dd>
+            @Html.DisplayFor(model => model.User.Salary)
+        </dd>
+    }
+}
+        <dt>
+            @Html.DisplayNameFor(model => model.User.PhoneNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.PhoneNumber)
+        </dd>
+    </dl>
+</div>
+@if (HttpContext.Current.User.Identity.IsAuthenticated)
+{
+    if (User.IsInRole("Admin"))
+    {
+        <p>
+            @Html.ActionLink("Edit", "EditUser", new { id = Model.Id }) |
+            @Html.ActionLink("Back to List", "ListUsers")
+        </p>
+    }
+    else
+    {
+        <p>            
+            @Html.ActionLink("Back to List", "ListUsers")
+        </p>
+    }
+}

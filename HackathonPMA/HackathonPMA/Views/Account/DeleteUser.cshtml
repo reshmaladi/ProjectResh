@@ -1,0 +1,90 @@
+﻿@model HackathonPMA.Models.UserDetailsModel
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>ApplicationUser</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.User.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Roles)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Roles)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.City)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.City)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.State)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.State)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.Country)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.Country)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.Zip)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.Zip)
+        </dd>
+        
+        <dt>
+            @Html.DisplayNameFor(model => model.User.PhoneNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.PhoneNumber)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="DeleteUser" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "ListUsers")
+        </div>
+    }
+</div>

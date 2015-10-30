@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Project Management App</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/jquery-ui.css" rel="stylesheet" />
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Project Management App", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul id="navMenu" class="nav navbar-nav">
+                    <li>@Html.ActionLink("Projects", "Index", "Projects")</li>
+                    <li>@Html.ActionLink("Stakeholders", "ListUsers", "Account")</li>
+@if (HttpContext.Current.User.Identity.IsAuthenticated)
+{
+    if (User.IsInRole("Admin"))
+    { 
+                    <li>@Html.ActionLink("Funds", "Index", "Funds")</li>
+                    <li>@Html.ActionLink("Roles", "Index", "Roles")</li>
+                    <li>@Html.ActionLink("Inventory", "Index", "Inventories")</li>
+    }
+}
+                    <li>@Html.ActionLink("Analytics", "AnalyticsView", "Analytics")</li>
+
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div id="wrap">
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
+            <div id="push"></div>
+        </div>
+    </div>
+    <footer id="footer">
+        <div class="container">
+            <p>&copy; @DateTime.Now.Year - N-SPARKS Team</p>
+        </div>
+    </footer>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <script src="~/Scripts/jquery-ui.js"></script>
+</body>
+</html>

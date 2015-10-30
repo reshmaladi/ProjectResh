@@ -1,0 +1,116 @@
+﻿@* @model IEnumerable<HackathonPMA.Models.Project> *@
+
+@model PagedList.IPagedList<HackathonPMA.Models.Project>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Projects";
+}
+
+<h3>Projects</h3>
+
+@if (HttpContext.Current.User.Identity.IsAuthenticated)
+{
+    if ((User.IsInRole("Admin")) || ((User.IsInRole("Manager"))))
+    {
+        <p>
+            @Html.ActionLink("Create New Project", "Create")
+        </p>
+    }
+}
+@using (Html.BeginForm("Index", "Projects", FormMethod.Get))
+{
+    <p>
+        @Html.TextBox("searchBy", ViewBag.CurrentFilter as string)
+        <input type="submit" class="btn btn-default" value="Search" />
+    </p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Name", "Index", new { sortBy = ViewBag.NameSort, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Description", "Index", new { sortBy = ViewBag.DescriptionSort, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("StartDate", "Index", new { sortBy = ViewBag.StartDateSort, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("EndDate", "Index", new { sortBy = ViewBag.EndDateSort, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("City", "Index", new { sortBy = ViewBag.CitySort, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Location", "Index", new { sortBy = ViewBag.LocationSort, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Category", "Index", new { sortBy = ViewBag.CategorySort, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.City)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Location)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+
+@if (HttpContext.Current.User.Identity.IsAuthenticated)
+{
+    if (User.IsInRole("Admin"))
+    {
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id }) |
+            @Html.ActionLink("Add SubProject", "CreateSubProject", new { id = item.Id })
+        </td>
+    }
+    else
+    {
+        <td>
+            @Html.ActionLink("Details", "Details", new { id = item.Id })
+        </td>
+    }
+
+}
+        </tr>
+    }
+
+</table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortBy = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
+<div style="padding:10px; border:1px solid black">
+
+    @Html.ActionLink("Generate PDF", "Report", new { id = "PDF" }) |
+    @Html.ActionLink("Generate Doc", "Report", new { id = "Word" }) |
+    @Html.ActionLink("Generate Excel", "Report", new { id = "Excel" }) |
+    @Html.ActionLink("Generate Image", "Report", new { id = "Image" })
+</div>

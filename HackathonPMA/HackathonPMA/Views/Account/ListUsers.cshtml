@@ -1,0 +1,102 @@
+﻿@model PagedList.IPagedList<HackathonPMA.Models.UserDetailsModel>
+
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Stakeholders";
+}
+
+<h3>Stakeholders</h3>
+@if (HttpContext.Current.User.Identity.IsAuthenticated)
+{
+    if (User.IsInRole("Admin"))
+    {
+        <p>
+            @Html.ActionLink("Register New User", "Register")
+        </p>
+    }
+}
+@using (Html.BeginForm("ListUsers", "Account", FormMethod.Get))
+{
+    <p>
+        @Html.TextBox("searchBy", ViewBag.CurrentFilter as string)
+        <input type="submit" class="btn btn-default" value="Search" />
+    </p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("FirstName", "ListUsers", new { sortBy = ViewBag.FirstNameSort, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("LastName", "ListUsers", new { sortBy = ViewBag.LastNameSort, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("UserName", "ListUsers", new { sortBy = ViewBag.UserNameSort, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            Roles
+        </th>
+        <th>
+            @Html.ActionLink("Gender", "ListUsers", new { sortBy = ViewBag.GenderSort, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("City", "ListUsers", new { sortBy = ViewBag.CitySort, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("State", "ListUsers", new { sortBy = ViewBag.StateSort, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Roles)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.Gender)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.City)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.State)
+        </td>
+@if (HttpContext.Current.User.Identity.IsAuthenticated)
+{
+    if (User.IsInRole("Admin"))
+    {
+        <td>
+            @Html.ActionLink("Edit", "EditUser", new { id = item.User.Id }) |
+            @Html.ActionLink("Details", "DetailUser", new { id = item.User.Id }) |
+            @Html.ActionLink("Delete", "DeleteUser", new { id = item.User.Id })
+        </td>
+    }
+    else
+    {
+        <td>
+            @Html.ActionLink("Details", "DetailUser", new { id = item.User.Id })
+        </td>
+    }
+}
+    </tr>
+}
+
+</table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("ListUsers",
+    new { page, sortBy = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
